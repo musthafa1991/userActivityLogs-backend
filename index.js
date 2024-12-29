@@ -12,15 +12,21 @@ const logRoutes = require("./routes/logRoutes");
 
 const app = express();
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 // const io = initSocket(server);
 
 const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(express.json());
-app.use(cors());
-
+app.use(
+  cors({
+    origin: "https://useractivitylogs.netlify.app",
+    // origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 // Routes
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
@@ -49,7 +55,7 @@ app.use((err, req, res, next) => {
 
 // Start server and connect to database
 connectToDatabase().then(() => {
-  server.listen(PORT, () => {
+  app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 });
