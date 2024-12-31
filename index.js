@@ -27,6 +27,10 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("Welcome to User Activity Logging System API");
+});
 // Routes
 app.use("/auth", authRoutes);
 app.use("/user", userRoutes);
